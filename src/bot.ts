@@ -6,6 +6,7 @@ import { SmoothBot, TriggerWordsBot } from './smooth-bot';
 
 interface CoolRequest {
   text: string;
+  sender_type: 'user' | 'bot',
 }
 
 export interface CustomRequest<T> extends Request {
@@ -17,6 +18,11 @@ export function respond(req: CustomRequest<CoolRequest>, res: Response) {
   const botRegex = /^\/cool guy$/;
   // botRegex.test(body.text)
   // const botResponse = cool();
+
+  // without this check the bot will just trigger itself over and over
+  if(body.sender_type !== "user"){
+    return;
+  }
 
   if(body.text) {
     let match = new TriggerWordsBot().match(body.text);
