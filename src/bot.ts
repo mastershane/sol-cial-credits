@@ -21,6 +21,8 @@ export function respond(req: CustomRequest<CoolRequest>, res: Response) {
 
   // without this check the bot will just trigger itself over and over
   if(body.sender_type !== "user"){
+    res.writeHead(200);
+    res.end();
     return;
   }
 

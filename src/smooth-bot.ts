@@ -1,5 +1,6 @@
 import { smoothArray } from "./smooth-data";
 import { textCosineSimilarity } from "./cosine-similarity";
+import { robDataArray } from "./rob-thomas-data";
 
 export interface MatchResult {
 	responseText: string;
@@ -17,7 +18,8 @@ export class TriggerWordsBot implements IMatchBot {
 			return {isMatch: true, responseText: 'https://youtu.be/6Whgn_iE5uc'}
 		}
 		if(normalizedText.includes('rob thomas')){
-			return {isMatch: true, responseText: 'https://en.wikipedia.org/wiki/Rob_Thomas_(musician)'}
+			const index = Math.floor(Math.random() * robDataArray.length);
+			return {isMatch: true, responseText: robDataArray[index]}
 		}
 		if(normalizedText.includes('santana')){
 			return {isMatch: true, responseText: 'https://youtu.be/h4Mrp6wuSwk'}
