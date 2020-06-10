@@ -14,7 +14,7 @@ Wedding Anniversary(Marisol) : October  1999
 Full name: Robert Kelly Thomas
 Rob Thomas came to USA when he was 6 months old
 Rob Thomas's dad left when he was 3 months old
-Rob ranaway when he was 17 years old & was homeless until
+Rob ranaway when he was 17 years old & was homeless until 20
 the first band he was is was called Tabitha's Secret
 Maison's Birthday: July 10,1998
 Rob Thomas's eyes change color-Blue,green,& brown

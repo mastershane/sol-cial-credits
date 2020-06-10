@@ -15,14 +15,14 @@ export class TriggerWordsBot implements IMatchBot {
 	public match(text: string) {
 		const normalizedText = text.toLowerCase();
 		if(normalizedText.includes('play smooth') || normalizedText.includes('!smooth')){
-			return {isMatch: true, responseText: 'https://youtu.be/6Whgn_iE5uc'}
+			return {isMatch: true, responseText: 'https://youtu.be/6Whgn_iE5uc'};
 		}
-		if(normalizedText.includes('rob thomas')){
+		if(normalizedText.includes('rob thomas')|| normalizedText.includes('robert thomas')|| normalizedText.includes('robot thomas')){
 			const index = Math.floor(Math.random() * robDataArray.length);
-			return {isMatch: true, responseText: robDataArray[index]}
+			return {isMatch: true, responseText: robDataArray[index]};
 		}
 		if(normalizedText.includes('santana')){
-			return {isMatch: true, responseText: 'https://youtu.be/h4Mrp6wuSwk'}
+			return {isMatch: true, responseText: 'https://youtu.be/h4Mrp6wuSwk'};
 		}
 		return {isMatch: false, responseText: ''};
 	}
@@ -37,6 +37,7 @@ export class SmoothBot implements IMatchBot {
 			line: smooth,
 			match: textCosineSimilarity(cleanText, smooth)
 		})).sort((a, b) => b.match - a.match)[0]
+
 		if(bestMatch.match > .95){
 			let nextLineIndex = smoothArray.indexOf(bestMatch.line) + 1;
 			if(nextLineIndex >= smoothArray.length){
@@ -44,10 +45,11 @@ export class SmoothBot implements IMatchBot {
 			}
 			return {isMatch: true, responseText: smoothArray[nextLineIndex]}
 		}
+
 		if(bestMatch.match > .66){
 			return {
 				isMatch: true,
-				responseText: "Did you mean to sing the lyric '" + bestMatch.line +	"' from the hit song Smooth by Santana f. Rob Thomas?"// + Math.round(bestMatch.match * 100) + '% match'
+				responseText: "Did you mean to sing the lyric '" + bestMatch.line +	"' from the Grammy winning hit song Smooth by Santana f. Rob Thomas?"
 			}
 		}
 
