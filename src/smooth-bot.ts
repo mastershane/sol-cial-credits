@@ -31,9 +31,11 @@ export class TriggerWordsBot implements IMatchBot {
 // tslint:disable-next-line: max-classes-per-file
 export class SmoothBot implements IMatchBot {
 	public match(text: string) {
+		// removing the !gif keyword
+		const cleanText = text.replace(/!gif/ig, '').trim();
 		const bestMatch = smoothArray.map((smooth) => ({
 			line: smooth,
-			match: textCosineSimilarity(text, smooth)
+			match: textCosineSimilarity(cleanText, smooth)
 		})).sort((a, b) => b.match - a.match)[0]
 		if(bestMatch.match > .95){
 			let nextLineIndex = smoothArray.indexOf(bestMatch.line) + 1;
