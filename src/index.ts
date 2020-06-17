@@ -1,8 +1,9 @@
 
 import  express    from 'express';
-import * as bot from './bot';
+import {MessageMatchBotRunner} from './bot';
 import bodyParser from 'body-parser';
 import dotEnv from 'dotenv';
+import { TriggerWordsBot, SmoothBot } from './smooth-bot';
 
 dotEnv.config();
 
@@ -16,7 +17,7 @@ app.get('/', (req, res) => {
   res.send("Hey, I'm Cool Guy.");
 });
 
-app.post('/', bot.respond);
+app.post('/', new MessageMatchBotRunner([new TriggerWordsBot(), new SmoothBot()]).respond);
 
 const port = Number(process.env.PORT || 5654);
 app.listen(port)

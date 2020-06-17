@@ -1,3 +1,5 @@
+// Code is based on the cosine similiarity section of this article https://medium.com/@sumn2u/string-similarity-comparision-in-js-with-examples-4bae35f13968
+
 interface Dictionary<V> {
     [key: string]: V;
 }

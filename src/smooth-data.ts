@@ -1,3 +1,9 @@
+/*
+Source: LyricFind
+Songwriters: Robert Thomas / Itaal Shur
+Smooth lyrics © Sony/ATV Music Publishing LLC, Downtown Music Publishing, Kobalt Music Publishing Ltd.
+*/
+
 const smooth = `Man, it's a hot one
 Like seven inches from the midday sun
 Well, I hear you whisper and the words melt everyone
