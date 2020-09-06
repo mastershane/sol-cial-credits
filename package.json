@@ -1,7 +1,7 @@
 {
-  "name": "groupme-smooth-bot",
+  "name": "sol-cial-credits",
   "version": "0.1.3",
-  "description": "A Groupme bot that listens lyrics to the hit song Smooth by Santana Ft. Rob Thomas",
+  "description": "A Groupme bot for awarding (and dewarding) arbritrary value points to your friends",
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",

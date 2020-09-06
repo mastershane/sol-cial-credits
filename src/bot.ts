@@ -1,11 +1,13 @@
 import HTTPS from 'https';
 import {Request, Response} from 'express';
-import { IMatchBot } from './smooth-bot';
+import { IMatchBot } from './match-bot';
 
 
 interface GroupMeRequest {
   text: string;
   sender_type: 'user' | 'bot',
+  source_guid: string,
+  user_id: string,
 }
 
 export interface CustomRequest<T> extends Request {
@@ -28,6 +30,8 @@ export class MessageMatchBotRunner {
       res.end();
       return;
     }
+
+    console.log(JSON.stringify(body));
 
     if(body.text) {
       for(const bot of this._bots){
