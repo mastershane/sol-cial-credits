@@ -1,9 +1,10 @@
 
-import  express    from 'express';
+import  express  from 'express';
 import {MessageMatchBotRunner} from './bot';
 import bodyParser from 'body-parser';
 import dotEnv from 'dotenv';
 import { CommandMatchBot } from './match-bot';
+import { query } from './db';
 
 dotEnv.config();
 
@@ -12,8 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
-app.get('/', (req, res) => {
-  // res.writeHead(200);
+app.get('/', async (req, res) => {
+  const dbres = await query('SELECT $1::text as message', ['Hello world!'])
+  console.log(dbres.rows[0].message) // Hello world!
   res.send("Hey, I'm Cool Guy.");
 });
 

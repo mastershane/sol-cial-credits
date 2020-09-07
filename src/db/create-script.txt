@@ -1,0 +1,23 @@
+CREATE DATABASE "sol-cial-credits"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+CREATE TABLE event (
+   event_Id serial PRIMARY KEY,
+   type VARCHAR(100) NOT NULL,
+   initiator_id VARCHAR(25) NOT NULL,
+   target_id VARCHAR(25),
+   value int,
+   created_on TIMESTAMP NOT NULL
+);
+
+CREATE TABLE groupme_user (
+   user_id VARCHAR(25) PRIMARY KEY,
+   name VARCHAR(100),
+   balance int NOT NULL
+);

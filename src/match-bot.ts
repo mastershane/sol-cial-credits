@@ -1,3 +1,6 @@
+import { GroupMeRequest, Mention } from "./bot";
+import { getUser } from "./repo/user-repo";
+import { IEvent, saveEvent, handleEvent } from "./repo/event-repo";
 
 export interface MatchResult {
 	responseText: string;
@@ -6,30 +9,52 @@ export interface MatchResult {
 export type CommandAction = 'Add' | 'Remove';
 export interface CreditCommand {
 	action: CommandAction;
-	targetName: string;
 	justification: string;
+	targets: string[];
 }
 
 export interface IMatchBot {
-	match: (text: string) => MatchResult
+	match: (message: GroupMeRequest) => Promise<MatchResult>
 }
 
 // Need to also create match bot for:
 // help
 // individual credits
 // credit summary
+// Response when trying to tag JOJO
 
 export class CommandMatchBot implements IMatchBot {
 
-	public match(text: string) {
-		const command = this.getCommand(text);
+	public async match(message: GroupMeRequest) {
+		const mentions = message.attachments.find(m => m.type === 'mentions') as Mention;
+		if(!mentions) {
+			return {isMatch: false, responseText: ''};
+		}
+
+		const command = this.getCommand(message.text);
 		if(command == null){
 			return {isMatch: false, responseText: ''};
 		}
 
-		// todo: get user by name
+		command.targets = mentions.user_ids;
 
-		return {isMatch: true, responseText: 'Credits updated for ' + command.targetName};
+		// get initaitor user from repo
+		const initiator = await getUser(message.user_id);
+		const points = initiator.balance / 100;
+		command.targets.forEach(async target => {
+			const event: IEvent = {
+				type: command.action,
+				initiatorId: message.user_id,
+				targetId: target,
+				value: points,
+				createdOn: new Date(),
+			}
+			await saveEvent(event);
+			await handleEvent(event);
+		});
+		const targetNames = await Promise.all(command.targets.map(async t => (await getUser(t)).name));
+
+		return {isMatch: true, responseText: ` ${points} credits ${command.action === 'Add' ? 'added to' : 'removed from' } ${targetNames.join(', ')}` };
 	}
 
 	private getCommand(text: string) {
@@ -55,8 +80,8 @@ export class CommandMatchBot implements IMatchBot {
 
 		const command: CreditCommand = {
 			action,
-			targetName: runningText.substr(0, runningText.indexOf('|')),
-			justification: runningText.substr(runningText.indexOf('|') + 1),
+			justification: runningText,
+			targets: [],
 		}
 		return command;
 	}
