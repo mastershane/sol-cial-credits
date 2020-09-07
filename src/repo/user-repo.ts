@@ -22,6 +22,16 @@ export const getUser = async (userId: string) => {
 	// values ('527431', 'Shane', 10000)
 };
 
+export const getUsers = async () => {
+	const results = await query('SELECT * FROM public.groupme_user', []);
+	const users: IUser[] =  results.rows.map(r => ({
+		userId: r.user_id,
+		name: r.name,
+		balance: r.balance,
+	}))
+	return users;
+}
+
 export const updateBalance = async (userId: string, score: number) => {
 	const results = await query('UPDATE public.groupme_user SET balance = balance + $2 WHERE user_id = $1', [userId, score]);
 }

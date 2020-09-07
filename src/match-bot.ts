@@ -1,5 +1,5 @@
 import { GroupMeRequest, Mention } from "./bot";
-import { getUser } from "./repo/user-repo";
+import { getUser, getUsers } from "./repo/user-repo";
 import { IEvent, saveEvent, handleEvent } from "./repo/event-repo";
 
 export interface MatchResult {
@@ -17,12 +17,29 @@ export interface IMatchBot {
 	match: (message: GroupMeRequest) => Promise<MatchResult>
 }
 
-// Need to also create match bot for:
-// help
-// individual credits
-// credit summary
-// Response when trying to tag JOJO
 
+export class InfoMatchBot implements IMatchBot {
+	public async match(message: GroupMeRequest) {
+		if (message.text.startsWith('!balance')) {
+			const user = await getUser(message.user_id);
+			return {isMatch: true, responseText: `Your current balance is ${user.balance}` };
+		}
+
+		if(message.text.startsWith('!ranking')){
+			const users = await getUsers();
+			users.sort((a, b) => {
+				return b.balance - a.balance;
+			});
+			const text = users.map(u => u.name + ": " + u.balance).join('\r\n');
+			return {isMatch: true, responseText: text };
+		}
+
+		return {isMatch: false, responseText: '' };
+
+	};
+}
+
+// tslint:disable-next-line: max-classes-per-file
 export class CommandMatchBot implements IMatchBot {
 
 	public async match(message: GroupMeRequest) {

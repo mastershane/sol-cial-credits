@@ -3,7 +3,7 @@ import  express  from 'express';
 import {MessageMatchBotRunner} from './bot';
 import bodyParser from 'body-parser';
 import dotEnv from 'dotenv';
-import { CommandMatchBot } from './match-bot';
+import { CommandMatchBot, InfoMatchBot } from './match-bot';
 import { query } from './db';
 
 dotEnv.config();
@@ -19,7 +19,7 @@ app.get('/', async (req, res) => {
   res.send("Hey, I'm Cool Guy.");
 });
 
-app.post('/', new MessageMatchBotRunner([new CommandMatchBot()]).respond);
+app.post('/', new MessageMatchBotRunner([new InfoMatchBot(), new CommandMatchBot()]).respond);
 
 const port = Number(process.env.PORT || 5654);
 app.listen(port)
