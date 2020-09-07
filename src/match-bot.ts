@@ -65,6 +65,7 @@ export class CommandMatchBot implements IMatchBot {
 				targetId: target,
 				value: points,
 				createdOn: new Date(),
+				text: command.justification,
 			}
 			await saveEvent(event);
 			await handleEvent(event);

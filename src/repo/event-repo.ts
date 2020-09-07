@@ -9,11 +9,12 @@ export interface IEvent {
 	targetId: string,
 	value: number,
 	createdOn: Date
+	text: string,
 }
 
 export const saveEvent = async (event: IEvent) => {
-	const sql = 'insert into public.event (type, initiator_id, target_id, value, created_on) values ($1, $2, $3, $4, now())'
-	const result = await query(sql, [event.type, event.initiatorId, event.targetId, event.value]);
+	const sql = 'insert into public.event (type, initiator_id, target_id, value, created_on, text) values ($1, $2, $3, $4, now(), $5)'
+	const result = await query(sql, [event.type, event.initiatorId, event.targetId, event.value, event.text]);
 }
 
 export const handleEvent = async (event: IEvent) => {
