@@ -57,7 +57,7 @@ export class CommandMatchBot implements IMatchBot {
 
 		// get initaitor user from repo
 		const initiator = await getUser(message.user_id);
-		const points = initiator.balance / 100;
+		const points = Math.round(initiator.balance / 100);
 		command.targets.forEach(async target => {
 			const event: IEvent = {
 				type: command.action,
