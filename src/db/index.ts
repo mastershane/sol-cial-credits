@@ -1,7 +1,9 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-	ssl: true,
+	ssl: {
+		rejectUnauthorized: false,
+	},
 	connectionString: process.env.DATABASE_URL,
 });
 
