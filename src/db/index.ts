@@ -1,7 +1,7 @@
-import { Pool, QueryResult } from 'pg';
-import { env } from 'process';
+import { Pool } from 'pg';
 
 const pool = new Pool({
+	ssl: true,
 	connectionString: process.env.DATABASE_URL,
 });
 
